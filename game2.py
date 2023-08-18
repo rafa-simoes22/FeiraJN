@@ -1,7 +1,11 @@
 import tkinter as tk
-from PIL import Image, ImageTk
 import random
 
+try:
+    from PIL import Image, ImageTk
+except ImportError:
+    import Image
+    import ImageTk
 
 class JogoDaSoma:
     def __init__(self, root):

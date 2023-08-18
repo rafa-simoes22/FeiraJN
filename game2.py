@@ -1,5 +1,6 @@
 import tkinter as tk
 import random
+from tkinter import ttk
 
 try:
     from PIL import Image, ImageTk
@@ -39,6 +40,10 @@ class JogoDaSoma:
         self.opcao_buttons = []
 
         self.imagens = [self.get_image(num) for num in range(1, 11)]
+
+        self.quit_button = ttk.Button(self.root, text="Sair", command=self.root.quit)  # Linha adicionada
+        self.quit_button.pack(pady=5)
+
 
         self.nova_rodada()
 

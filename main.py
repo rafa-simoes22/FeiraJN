@@ -52,6 +52,9 @@ class OddEvenGame:
             self.odd_button.config(state=tk.DISABLED)
             self.play_button.config(state=tk.NORMAL)
 
+            self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
+            self.back_to_menu_button.pack()
+
     def make_choice(self, choice):
         if hasattr(self, 'current_number'):
             number = self.current_number
@@ -68,6 +71,10 @@ class OddEvenGame:
         self.odd_button.config(state=tk.NORMAL)
         self.play_button.config(state=tk.DISABLED)
         self.play()
+
+    def close_game(self):
+        self.root.destroy()
+        self.main_interface.show_menu()
 
 
 class JogoDaSoma:
@@ -177,6 +184,9 @@ class JogoDaSoma:
         self.botao_jogar_novamente = tk.Button(self.root, text="Jogar Novamente", command=self.reiniciar_jogo)
         self.botao_jogar_novamente.pack(pady=10)
 
+        self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
+        self.back_to_menu_button.pack()
+
     def reiniciar_jogo(self):
         self.pontuacao = 0
         self.rodada_atual = 1
@@ -187,6 +197,10 @@ class JogoDaSoma:
         self.image_frame.pack()
         self.nova_rodada()
         self.atualizar_pontuacao()
+
+    def close_game(self):
+        self.root.destroy()
+        self.main_interface.show_menu()
 
 
 class MainInterface:
@@ -209,16 +223,20 @@ class MainInterface:
     def play_game1(self):
         self.hide_buttons()
         game_root = tk.Toplevel(self.root)
-        game = OddEvenGame(game_root, self)
+        self.game_window = OddEvenGame(game_root, self)
 
     def play_game2(self):
         self.hide_buttons()
         game_root = tk.Toplevel(self.root)
-        game = JogoDaSoma(game_root, self)
+        self.game_window = JogoDaSoma(game_root, self)
 
     def hide_buttons(self):
         self.game1_button.pack_forget()
         self.game2_button.pack_forget()
+
+    def show_menu(self):
+        self.game_window = None
+        self.play_button.pack()
 
 
 root = tk.Tk()

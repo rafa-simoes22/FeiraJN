@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-import random
 from PIL import Image, ImageTk
+import random
 
 
 class OddEvenGame:
-    def __init__(self, root):
+    def __init__(self, root, main_interface):
         self.root = root
-        self.root.title("Jogo dos Números Ímpares e Pares")
+        self.main_interface = main_interface
 
         self.score = 0
         self.rounds_played = 0
@@ -33,9 +33,6 @@ class OddEvenGame:
 
         self.play_button = ttk.Button(self.root, text="Jogar Novamente", state=tk.DISABLED, command=self.play_again)
         self.play_button.pack(pady=5)
-
-        self.quit_button = ttk.Button(self.root, text="Sair", command=self.root.quit)
-        self.quit_button.pack(pady=5)
 
         self.play()
 
@@ -72,9 +69,12 @@ class OddEvenGame:
         self.play_button.config(state=tk.DISABLED)
         self.play()
 
+
 class JogoDaSoma:
-    def __init__(self, root):
+    def __init__(self, root, main_interface):
         self.root = root
+        self.main_interface = main_interface
+
         self.root.title("Jogo da Soma com Imagens")
 
         self.pontuacao = 0
@@ -104,9 +104,6 @@ class JogoDaSoma:
         self.opcao_buttons = []
 
         self.imagens = [self.get_image(num) for num in range(1, 11)]
-
-        self.quit_button = ttk.Button(self.root, text="Sair", command=self.root.quit)
-        self.quit_button.pack(pady=5)
 
         self.nova_rodada()
 
@@ -191,34 +188,39 @@ class JogoDaSoma:
         self.nova_rodada()
         self.atualizar_pontuacao()
 
-class GameApp:
+
+class MainInterface:
     def __init__(self, root):
         self.root = root
-        self.root.title("Jogos")
+        self.root.title("Jogos Divertidos")
 
-        self.play_button = tk.Button(root, text="Jogar Jogo dos Números Ímpares e Pares", command=self.play_odd_even)
-        self.play_button.grid(row=100, pady=15)
-        self.play_button.grid(row=0, pady=10, sticky="ew")
+        self.play_button = ttk.Button(self.root, text="JOGAR", command=self.choose_game)
+        self.play_button.pack(pady=50)
 
-        self.play_button2 = tk.Button(root, text="Jogar Jogo da Soma com Imagens", command=self.play_sum_game)
-        self.play_button2.grid(row=250, pady=15)
-        self.play_button.grid(row=0, pady=10, sticky="ew")
+    def choose_game(self):
+        self.play_button.pack_forget()
 
-    def play_odd_even(self):
-        self.root.destroy()
-        root = tk.Tk()
-        game = OddEvenGame(root)
-        root.mainloop()
+        self.game1_button = ttk.Button(self.root, text="JOGO 1 - Números Ímpares e Pares", command=self.play_game1)
+        self.game1_button.pack()
 
-    def play_sum_game(self):
-        self.root.destroy()
-        root = tk.Tk()
-        game = JogoDaSoma(root)
-        root.mainloop()
+        self.game2_button = ttk.Button(self.root, text="JOGO 2 - Jogo da Soma com Imagens", command=self.play_game2)
+        self.game2_button.pack()
+
+    def play_game1(self):
+        self.hide_buttons()
+        game_root = tk.Toplevel(self.root)
+        game = OddEvenGame(game_root, self)
+
+    def play_game2(self):
+        self.hide_buttons()
+        game_root = tk.Toplevel(self.root)
+        game = JogoDaSoma(game_root, self)
+
+    def hide_buttons(self):
+        self.game1_button.pack_forget()
+        self.game2_button.pack_forget()
 
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = GameApp(root)
-    root.geometry("300x300")
-    root.mainloop()
+root = tk.Tk()
+main_interface = MainInterface(root)
+root.mainloop()

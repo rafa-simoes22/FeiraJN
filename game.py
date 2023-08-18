@@ -33,9 +33,6 @@ class OddEvenGame:
         self.play_button = ttk.Button(self.root, text="Jogar Novamente", state=tk.DISABLED, command=self.play_again)
         self.play_button.pack(pady=5)
 
-        self.quit_button = ttk.Button(self.root, text="Sair", command=self.root.quit)
-        self.quit_button.pack(pady=5)
-
         self.play()
 
     def play(self):

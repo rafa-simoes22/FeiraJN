@@ -9,6 +9,8 @@ class OddEvenGame:
         self.root = root
         self.main_interface = main_interface
 
+        self.root.title("Números Ímpares e Pares")
+
         self.score = 0
         self.rounds_played = 0
         self.max_rounds = 10
@@ -245,4 +247,5 @@ class MainInterface:
 
 root = tk.Tk()
 main_interface = MainInterface(root)
+root.geometry("300x200")
 root.mainloop()

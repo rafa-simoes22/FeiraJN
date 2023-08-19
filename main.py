@@ -52,8 +52,9 @@ class OddEvenGame:
             self.odd_button.config(state=tk.DISABLED)
             self.play_button.config(state=tk.NORMAL)
 
-            self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
-            self.back_to_menu_button.pack()
+            if not hasattr(self, "back_to_menu_button"):
+                self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
+                self.back_to_menu_button.pack()
 
     def make_choice(self, choice):
         if hasattr(self, 'current_number'):
@@ -111,6 +112,10 @@ class JogoDaSoma:
         self.opcao_buttons = []
 
         self.imagens = [self.get_image(num) for num in range(1, 11)]
+
+        self.botao_jogar_novamente = tk.Button(root, text="Jogar Novamente", command=self.reiniciar_jogo)
+        self.back_to_menu_button = ttk.Button(root, text="Voltar ao Menu", command=self.close_game)
+        self.back_to_menu_button.pack_forget()
 
         self.nova_rodada()
 
@@ -181,10 +186,7 @@ class JogoDaSoma:
         self.image_frame.pack_forget()
         self.feedback_label.config(text=f"Jogo finalizado! Sua pontuação final: {self.pontuacao}")
 
-        self.botao_jogar_novamente = tk.Button(self.root, text="Jogar Novamente", command=self.reiniciar_jogo)
         self.botao_jogar_novamente.pack(pady=10)
-
-        self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
         self.back_to_menu_button.pack()
 
     def reiniciar_jogo(self):
@@ -197,6 +199,8 @@ class JogoDaSoma:
         self.image_frame.pack()
         self.nova_rodada()
         self.atualizar_pontuacao()
+
+        self.back_to_menu_button.pack_forget()
 
     def close_game(self):
         self.root.destroy()

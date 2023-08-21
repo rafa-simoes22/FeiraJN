@@ -54,9 +54,6 @@ class OddEvenGame:
             self.odd_button.config(state=tk.DISABLED)
             self.play_button.config(state=tk.NORMAL)
 
-            if not hasattr(self, "back_to_menu_button"):
-                self.back_to_menu_button = ttk.Button(self.root, text="Voltar ao Menu", command=self.close_game)
-                self.back_to_menu_button.pack()
 
     def make_choice(self, choice):
         if hasattr(self, 'current_number'):
@@ -116,8 +113,6 @@ class JogoDaSoma:
         self.imagens = [self.get_image(num) for num in range(1, 11)]
 
         self.botao_jogar_novamente = tk.Button(root, text="Jogar Novamente", command=self.reiniciar_jogo)
-        self.back_to_menu_button = ttk.Button(root, text="Voltar ao Menu", command=self.close_game)
-        self.back_to_menu_button.pack_forget()
 
         self.nova_rodada()
 
@@ -189,7 +184,6 @@ class JogoDaSoma:
         self.feedback_label.config(text=f"Jogo finalizado! Sua pontuação final: {self.pontuacao}")
 
         self.botao_jogar_novamente.pack(pady=10)
-        self.back_to_menu_button.pack()
 
     def reiniciar_jogo(self):
         self.pontuacao = 0
@@ -202,7 +196,6 @@ class JogoDaSoma:
         self.nova_rodada()
         self.atualizar_pontuacao()
 
-        self.back_to_menu_button.pack_forget()
 
     def close_game(self):
         self.root.destroy()
@@ -227,12 +220,10 @@ class MainInterface:
         self.game2_button.pack()
 
     def play_game1(self):
-        self.hide_buttons()
         game_root = tk.Toplevel(self.root)
         self.game_window = OddEvenGame(game_root, self)
 
     def play_game2(self):
-        self.hide_buttons()
         game_root = tk.Toplevel(self.root)
         self.game_window = JogoDaSoma(game_root, self)
 
@@ -243,6 +234,7 @@ class MainInterface:
     def show_menu(self):
         self.game_window = None
         self.play_button.pack()
+
 
 
 root = tk.Tk()

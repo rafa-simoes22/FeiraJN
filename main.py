@@ -75,6 +75,7 @@ class OddEvenGame:
     def close_game(self):
         self.root.destroy()
         self.main_interface.show_menu()
+        self.main_interface.game_in_progress = False
 
 
 class JogoDaSoma:
@@ -196,19 +197,21 @@ class JogoDaSoma:
         self.nova_rodada()
         self.atualizar_pontuacao()
 
-
     def close_game(self):
         self.root.destroy()
         self.main_interface.show_menu()
+        self.main_interface.game_in_progress = False
 
 
 class MainInterface:
     def __init__(self, root):
         self.root = root
-        self.root.title("Jogos Divertidos")
+        self.root.title("Mate - Magia Especial")
 
         self.play_button = ttk.Button(self.root, text="JOGAR", command=self.choose_game)
-        self.play_button.pack(pady=50)
+        self.play_button.pack(pady=80)
+
+        self.game_in_progress = False
 
     def choose_game(self):
         self.play_button.pack_forget()
@@ -220,12 +223,20 @@ class MainInterface:
         self.game2_button.pack()
 
     def play_game1(self):
-        game_root = tk.Toplevel(self.root)
-        self.game_window = OddEvenGame(game_root, self)
+        if not self.game_in_progress:
+            self.hide_buttons()
+            self.game_in_progress = True
+            game_root = tk.Toplevel(self.root)
+            self.game_window = OddEvenGame(game_root, self)
+            game_root.protocol("WM_DELETE_WINDOW", self.game_window.close_game)
 
     def play_game2(self):
-        game_root = tk.Toplevel(self.root)
-        self.game_window = JogoDaSoma(game_root, self)
+        if not self.game_in_progress:
+            self.hide_buttons()
+            self.game_in_progress = True
+            game_root = tk.Toplevel(self.root)
+            self.game_window = JogoDaSoma(game_root, self)
+            game_root.protocol("WM_DELETE_WINDOW", self.game_window.close_game)
 
     def hide_buttons(self):
         self.game1_button.pack_forget()

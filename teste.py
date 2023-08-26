@@ -110,7 +110,7 @@ class JogoDaSoma(QtWidgets.QWidget):
         self.setLayout(layout)
 
         self.imagens = [self.get_image(num) for num in range(1, 11)]
-        self.buttons = []
+        self.option_buttons = []
 
         self.nova_rodada()
 
@@ -148,16 +148,16 @@ class JogoDaSoma(QtWidgets.QWidget):
         return image
 
     def atualizar_opcoes(self):
-        for button in self.buttons:
+        for button in self.option_buttons:
             button.deleteLater()
-        self.buttons = []
+        self.option_buttons = []
 
         for opcao in self.opcoes:
             button = QtWidgets.QPushButton(str(opcao))
             callback = self.criar_callback(opcao)
             button.clicked.connect(callback)
             self.layout().addWidget(button)
-            self.buttons.append(button)
+            self.option_buttons.append(button)
 
     def criar_callback(self, opcao):
         def callback():
@@ -186,6 +186,9 @@ class JogoDaSoma(QtWidgets.QWidget):
         self.feedback_label.setText(f"Jogo finalizado! Sua pontuação final: {self.pontuacao}")
         self.botao_jogar_novamente.show()
 
+        for button in self.option_buttons:
+            button.setEnabled(False)
+
     def reiniciar_jogo(self):
         self.pontuacao = 0
         self.rodada_atual = 1
@@ -195,6 +198,9 @@ class JogoDaSoma(QtWidgets.QWidget):
 
         self.image_label1.clear()
         self.image_label2.clear()
+
+        for button in self.option_buttons:
+            button.setEnabled(True)
 
         self.nova_rodada()
         self.atualizar_pontuacao()

@@ -110,6 +110,7 @@ class JogoDaSoma(QtWidgets.QWidget):
         self.setLayout(layout)
 
         self.imagens = [self.get_image(num) for num in range(1, 11)]
+        self.buttons = []
 
         self.nova_rodada()
 
@@ -147,15 +148,21 @@ class JogoDaSoma(QtWidgets.QWidget):
         return image
 
     def atualizar_opcoes(self):
-        for i in reversed(range(self.layout().count())):
-            item = self.layout().itemAt(i)
-            if item.widget() is not None:
-                item.widget().deleteLater()
+        for button in self.buttons:
+            button.deleteLater()
+        self.buttons = []
 
         for opcao in self.opcoes:
             button = QtWidgets.QPushButton(str(opcao))
-            button.clicked.connect(lambda opcao=opcao: self.selecionar_opcao(opcao))
+            callback = self.criar_callback(opcao)
+            button.clicked.connect(callback)
             self.layout().addWidget(button)
+            self.buttons.append(button)
+
+    def criar_callback(self, opcao):
+        def callback():
+            self.selecionar_opcao(opcao)
+        return callback
 
     def selecionar_opcao(self, opcao):
         if opcao == self.resposta_correta:

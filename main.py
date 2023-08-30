@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk
 import random
+from PIL import Image, ImageTk
+
 
 
 class OddEvenGame:
@@ -10,6 +11,19 @@ class OddEvenGame:
         self.main_interface = main_interface
 
         self.root.title("Números Ímpares e Pares")
+
+        # Impedir redimensionamento e maximização
+        self.root.resizable(False, False)
+
+        # Configurar tamanho inicial da janela
+        self.root.geometry("350x500")  # Ajuste para o tamanho desejado
+
+        # Carregar a imagem de fundo
+        background_image = Image.open("jogo_1.png")
+        self.background_photo = ImageTk.PhotoImage(background_image)
+
+        self.background_label = tk.Label(self.root, image=self.background_photo)
+        self.background_label.place(relwidth=1, relheight=1)
 
         self.score = 0
         self.rounds_played = 0
@@ -84,6 +98,19 @@ class JogoDaSoma:
         self.main_interface = main_interface
 
         self.root.title("Jogo da Soma com Imagens")
+
+        # Impedir redimensionamento e maximização
+        self.root.resizable(False, False)
+
+        # Configurar tamanho inicial da janela
+        self.root.geometry("400x400")  # Ajuste para o tamanho desejado
+
+        # Carregar a imagem de fundo
+        background_image = Image.open("jogo_2.png")
+        self.background_photo = ImageTk.PhotoImage(background_image)
+
+        self.background_label = tk.Label(self.root, image=self.background_photo)
+        self.background_label.place(relwidth=1, relheight=1)
 
         self.pontuacao = 0
         self.rodada_atual = 1
@@ -208,6 +235,20 @@ class MainInterface:
         self.root = root
         self.root.title("Mate - Magia Especial")
 
+
+        # Impedir redimensionamento e maximização
+        self.root.resizable(False, False)
+
+        # Configurar tamanho inicial da janela
+        self.root.geometry("800x800")  # Ajuste para o tamanho desejado
+
+        # Carregar a imagem de fundo
+        background_image = Image.open("Interface.png")
+        self.background_photo = ImageTk.PhotoImage(background_image)
+
+        self.background_label = tk.Label(self.root, image=self.background_photo)
+        self.background_label.place(relwidth=1, relheight=1)
+
         self.play_button = ttk.Button(self.root, text="JOGAR", command=self.choose_game)
         self.play_button.pack(pady=80)
 
@@ -248,7 +289,12 @@ class MainInterface:
 
 
 
+
 root = tk.Tk()
 main_interface = MainInterface(root)
 root.geometry("300x200")
+#icon_path = "icone.ico"
+#ico = Image.open(icon_path)
+#icon_photo = ImageTk.PhotoImage(ico)
+#root.iconphoto(True, icon_photo)
 root.mainloop()
